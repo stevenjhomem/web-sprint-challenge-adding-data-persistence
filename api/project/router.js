@@ -25,7 +25,7 @@ router.post("/", (req, res, next) => {
     });
   } else {
     Projects.addProject(req.body)
-      .then(object => {
+      .then((object) => {
         res.status(201).json({
           ...object,
           project_completed: object.project_completed === 1 ? true : false,

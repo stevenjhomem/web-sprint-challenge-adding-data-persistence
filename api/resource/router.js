@@ -12,18 +12,18 @@ router.get("/", (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   const { resource_name } = req.body;
-  const nonUniqueNameIssue = await Resources.getResourceByName(resource_name)
+  const nonUniqueNameIssue = await Resources.getResourceByName(resource_name);
   if (!resource_name) {
     res.status(400).json({
       message:
         "You are missing the resource name, please add one before accessing the database",
     });
-  } else if (nonUniqueNameIssue){
-    res.status(400).json({message: "Resource name taken, don't be dumb"})
+  } else if (nonUniqueNameIssue) {
+    res.status(400).json({ message: "Resource name taken, don't be dumb" });
   } else {
     Resources.addResource(req.body)
-      .then(object => {
-        res.status(201).json(object)
+      .then((object) => {
+        res.status(201).json(object);
       })
       .catch(next);
   }
