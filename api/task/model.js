@@ -4,14 +4,13 @@ function getTasks() {
   return db("tasks as t").leftJoin("projects as p", "t.project_id", "p.project_id")
 }
 
-function addTask() {
-  return Promise.resolve(`Newly created Task has been successful`);
+async function addTask(newTask) {
+  const newTaskId = await db("tasks").insert(newTask)
+    return getTaskById(newTaskId)
 }
 
 function getTaskById(task_id) {
-  return Promise.resolve(
-    `Here is the task you requested with task id ${task_id}`
-  );
+  return db("tasks").where("task_id", task_id).first();
 }
 
 module.exports = { getTasks, addTask, getTaskById };

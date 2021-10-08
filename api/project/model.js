@@ -6,12 +6,12 @@ function getProjects() {
 }
 
 async function addProject(newProject) {
-  const newProjectId = await db("projects").insert(newProject)
-  return getProjectById(newProjectId)
+  const newProjectId = await db("projects").insert(newProject);
+  return getProjectById(newProjectId);
 }
 
 function getProjectById(project_id) {
-  return db("projects").where("project_id", project_id).first()
+  return db("projects").where("project_id", project_id).first();
 }
 
 module.exports = { getProjects, addProject, getProjectById };
