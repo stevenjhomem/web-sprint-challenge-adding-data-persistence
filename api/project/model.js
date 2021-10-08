@@ -1,7 +1,8 @@
 // build your `Project` model here
+const db = require("../../data/dbConfig");
 
 function getProjects() {
-  return Promise.resolve("You have just received all of your projects!");
+  return db("projects");
 }
 
 function addProject() {
