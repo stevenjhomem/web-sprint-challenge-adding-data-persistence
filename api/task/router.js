@@ -1,20 +1,16 @@
-// build your `/api/tasks` router here
-// build your `/api/resources` router here
 const router = require("express").Router();
 const Tasks = require("./model");
 
 router.get("/", (req, res, next) => {
   Tasks.getTasks()
     .then((resource) => {
-      res.status(200).json(resource);
-    })
-    .catch(next);
-});
-
-router.get("/:task_id", (req, res, next) => {
-  Tasks.getTaskById(req.params.task_id)
-    .then((resource) => {
-      res.status(200).json(resource);
+      const tasks = resource.map(task =>{
+        return{
+          ...task,
+          task_completed: (task.task_completed === 0)? false : true
+        }
+      })
+      res.status(200).json(tasks)
     })
     .catch(next);
 });

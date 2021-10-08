@@ -1,6 +1,7 @@
-// build your `Task` model here
+const db = require('../../data/dbConfig')
+
 function getTasks() {
-  return Promise.resolve("You have just received all of your Tasks!");
+  return db("tasks as t").leftJoin("projects as p", "t.project_id", "p.project_id")
 }
 
 function addTask() {
