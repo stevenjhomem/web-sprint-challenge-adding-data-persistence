@@ -5,14 +5,13 @@ function getProjects() {
   return db("projects");
 }
 
-function addProject() {
-  return Promise.resolve(`Newly created project has been successful`);
+async function addProject(newProject) {
+  const newProjectId = await db("projects").insert(newProject)
+  return getProjectById(newProjectId)
 }
 
 function getProjectById(project_id) {
-  return Promise.resolve(
-    `Here is the project you requested with project id ${project_id}`
-  );
+  return db("projects").where("project_id", project_id).first()
 }
 
 module.exports = { getProjects, addProject, getProjectById };

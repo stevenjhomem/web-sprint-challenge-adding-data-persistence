@@ -10,20 +10,23 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/:resource_id", (req, res, next) => {
-  Resources.getResourceById(req.params.resource_id)
-    .then((resource) => {
-      res.status(200).json(resource);
-    })
-    .catch(next);
-});
-
-router.post("/", (req, res, next) => {
-  Resources.addResource(req.body)
-    .then((resource) => {
-      res.status(200).json(resource);
-    })
-    .catch(next);
+router.post("/", async (req, res, next) => {
+  const { resource_name } = req.body;
+  const nonUniqueNameIssue = await Resources.getResourceByName(resource_name)
+  if (!resource_name) {
+    res.status(400).json({
+      message:
+        "You are missing the resource name, please add one before accessing the database",
+    });
+  } else if (nonUniqueNameIssue){
+    res.status(400).json({message: "Resource name taken, don't be dumb"})
+  } else {
+    Resources.addResource(req.body)
+      .then(object => {
+        res.status(201).json(object)
+      })
+      .catch(next);
+  }
 });
 
 // eslint-disable-next-line no-unused-vars

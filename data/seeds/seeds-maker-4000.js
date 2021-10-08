@@ -17,9 +17,23 @@ const projects = [
   },
 ];
 
+const resources = [
+  {
+      resource_name: "urbane bronze paint",
+      resource_description: null
+  },
+  {
+      resource_name: "paint brush",
+      resource_description: "four inch angle brush"
+  }
+]
+
 exports.seed = async function (knex) {
   await knex("projects").truncate();
   await knex("projects").insert(projects);
+  await knex("resources").truncate();
+  await knex("resources").insert(resources);
 };
 
 exports.projects = projects;
+exports.resources = resources;
